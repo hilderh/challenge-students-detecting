@@ -1,0 +1,26 @@
+{
+  "name": "challenge-students-detecting",
+  "version": "1.0.0",
+  "description": "Command Line Application Student Detecting",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hilderh/challenge-students-detecting.git"
+  },
+  "keywords": [
+    "cli",
+    "student",
+    "detecting",
+    "foris",
+    "challenge"
+  ],
+  "author": "Hilder Hernandez",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/hilderh/challenge-students-detecting/issues"
+  },
+  "homepage": "https://github.com/hilderh/challenge-students-detecting#readme"
+}
