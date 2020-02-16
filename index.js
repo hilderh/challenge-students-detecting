@@ -6,7 +6,23 @@
 const chalk = require("chalk");
 const boxen = require("boxen");
 
+const getUrlFile = require('./logic/commandLine/fileFormPrompt')
+/* 
+class person{
+    constructor(){
+
+    }
+    get name(){
+        return this.name;
+    }
+    set setName(name){
+        this.name = name;
+    }
+}
+
+
 class Animal{
+
     constructor(number){
         this.age = number;
     }
@@ -31,3 +47,12 @@ const boxenOptions = {
 
 const msgBox = boxen( greeting, boxenOptions );
 console.log(msgBox);
+
+const run = async () => {
+    const credentials = await getUrlFile.urlUser();
+    console.log(credentials);
+};
+  
+run(); */
+
+getUrlFile.promptFile();
