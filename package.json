@@ -4,7 +4,7 @@
   "description": "Command Line Application Student Detecting",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha"
   },
   "repository": {
     "type": "git",
@@ -22,5 +22,14 @@
   "bugs": {
     "url": "https://github.com/hilderh/challenge-students-detecting/issues"
   },
-  "homepage": "https://github.com/hilderh/challenge-students-detecting#readme"
+  "homepage": "https://github.com/hilderh/challenge-students-detecting#readme",
+  "dependencies": {
+    "boxen": "^4.2.0",
+    "chalk": "^3.0.0",
+    "inquirer": "^7.0.4"
+  },
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "mocha": "^7.0.1"
+  }
 }
