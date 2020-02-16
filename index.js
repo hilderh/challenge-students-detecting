@@ -6,7 +6,7 @@
 const chalk = require("chalk");
 const boxen = require("boxen");
 
-const getUrlFile = require('./logic/commandLine/fileFormPrompt')
+const promptFunctions = require('./logic/commandLine/fileFromPrompt')
 /* 
 class person{
     constructor(){
@@ -55,4 +55,9 @@ const run = async () => {
   
 run(); */
 
-getUrlFile.promptFile();
+const run = async ()=>{
+    const {error,data,message} = await promptFunctions.readPromptFile();
+    return (!error) && console.log(message);
+}
+
+run();
