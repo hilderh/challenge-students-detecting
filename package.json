@@ -22,5 +22,9 @@
   "bugs": {
     "url": "https://github.com/hilderh/challenge-students-detecting/issues"
   },
-  "homepage": "https://github.com/hilderh/challenge-students-detecting#readme"
+  "homepage": "https://github.com/hilderh/challenge-students-detecting#readme",
+  "dependencies": {
+    "boxen": "^4.2.0",
+    "chalk": "^3.0.0"
+  }
 }
