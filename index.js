@@ -1,12 +1,10 @@
-/* const saludo = ()=>{
-    for (let i = 0; i < 10; i++) {
-        console.log(`${i}: Resultado`)
-    }
-} */
 const chalk = require("chalk");
 const boxen = require("boxen");
 
-const promptFunctions = require('./logic/commandLine/fileFromPrompt')
+const promptFunctions = require('./logic/commandLine/fileFromPrompt');
+const commandsList = require('./models/commandList')
+const INDEX_COMMAND = 0;
+
 /* 
 class person{
     constructor(){
@@ -34,18 +32,11 @@ class Animal{
  var animal = new Animal(2);
 const greeting = chalk.white.bold(`Lista de asistencia \n\nHola que tal mis panas como estan? \n ${animal.getAge()}`);
 
-const boxenOptions = {
- padding: 1,
- margin: 1,
- borderStyle: "round",
- borderColor: "green",
- backgroundColor: "#555555"
-};
 
 
 
 
-const msgBox = boxen( greeting, boxenOptions );
+
 console.log(msgBox);
 
 const run = async () => {
@@ -55,9 +46,42 @@ const run = async () => {
   
 run(); */
 
+const boxenOptions = {
+    padding: 1,
+    margin: 1,
+    borderStyle: "round",
+    borderColor: "green",
+    backgroundColor: "#555555"
+};
+
+
+
 const run = async ()=>{
-    const {error,data,message} = await promptFunctions.readPromptFile();
-    return (!error) && console.log(message);
+    try {
+        var date = new Date(2020,13 - 1,01,12,04,0);
+        var date2 = new Date(2020,13 - 1,01,13,35,0);
+        console.log("a",parseInt("a"))
+        console.log("Date",date.getTime());
+        console.log("Date",date2.getTime());
+        console.log("Resta",Math.floor((date2.getTime() - date.getTime())/60000))
+        /* const readPromptFile = await promptFunctions.readPromptFile();
+        const lineValidationResult = await promptFunctions.parseDataFromFile(readPromptFile.data);
+        console.log(lineValidationResult.message);
+        if(lineValidationResult.data.validLines.length == 0) throw new Error(lineValidationResult.message);
+        for (const line of lineValidationResult.data.validLines) {
+            const NUMBER_COMMAND = `${lineValidationResult.data.validLines.indexOf(line) + 1}`
+            console.log(`Procesando linea Nº ${NUMBER_COMMAND}...`,);
+            console.log(`Comando: ${line}`);
+            const resultMessage = await commandsList[line.split(' ')[INDEX_COMMAND]](line);
+            console.log(`Result: ${resultMessage}\n`);
+            
+        } */
+        // const msgBox = boxen( message, boxenOptions );
+        // console.log(responseValdation.data);
+    } catch (error) {
+        const msgBox = boxen(error.message, boxenOptions );
+        return console.log(msgBox);
+    }
 }
 
 run();

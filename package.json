@@ -29,6 +29,7 @@
     "inquirer": "^7.0.4"
   },
   "devDependencies": {
+    "@hapi/joi": "^17.1.0",
     "chai": "^4.2.0",
     "mocha": "^7.0.1"
   }

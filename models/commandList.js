@@ -1,9 +1,11 @@
-module.exports = {
-    Student(studentData){
-        console.log("Data estudiante",studentData);
-        return 'Data estudiante'
-    },
-    Presence(){
+const studentFunctions = require('../logic/student');
 
+module.exports = {
+    async Student(commandLineStudent){
+        const responseCreate = await studentFunctions.createNewStudent(commandLineStudent)
+        return responseCreate.message;
+    },
+    async Presence(commandLinePresence){
+        return commandLinePresence
     }
 }
