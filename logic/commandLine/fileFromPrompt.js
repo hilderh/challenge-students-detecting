@@ -11,23 +11,6 @@ let response = {
 const INDEX_COMMAND = 0;
 
 module.exports = {
-    urlUser: ()=>{
-        const questions = [
-            {
-              name: 'urlFile',
-              type: 'input',
-              message: 'Introduce la ubicación de tu archivo ( Ejm: ./lista.txt ): ',
-              validate: function( value ) {
-                if (value.length) {
-                  return true;
-                } else {
-                  return 'Please enter your username or e-mail address.';
-                }
-              }
-            }
-        ];
-        return inquirer.prompt(questions);
-    },
     readPromptFile: ()=>{
       return new Promise((resolve,reject)=>{
         try {
@@ -55,6 +38,7 @@ module.exports = {
           invalidLines: linesFromFile.filter(line=> (!enabledCommands[line.split(' ')[INDEX_COMMAND]]) ),
           validLines: linesFromFile.filter(line=> (enabledCommands[line.split(' ')[INDEX_COMMAND]]) ),
         };
+        if(response.data.validLines.length === 0) throw new Error('El archivo proporcionado no contiene comandos validos para procesar los datos');
         return response;
       } catch (error) {
         response.error = true;
