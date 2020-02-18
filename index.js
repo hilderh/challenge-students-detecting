@@ -2,7 +2,9 @@ const chalk = require("chalk");
 const boxen = require("boxen");
 
 const promptFunctions = require('./logic/commandLine/fileFromPrompt');
-const commandsList = require('./models/schemas/commandList')
+const reports = require('./logic/report');
+
+const commandsList = require('./models/schemas/commandList');
 const INDEX_COMMAND = 0;
 
 /* 
@@ -69,6 +71,7 @@ const run = async ()=>{
             const resultMessage = await commandsList[line.split(' ')[INDEX_COMMAND]](line);
             console.log(`Result: ${resultMessage}\n`);
         }
+        reports.generatePresencesByStudentReport();
         // const msgBox = boxen( message, boxenOptions );
         // console.log(responseValdation.data);
     } catch (error) {

@@ -49,5 +49,37 @@ module.exports = {
     isExistingStudent: async (studentName)=>{
         const isExistingStudent = dataTables.studentTable.find(a => a.getName() == studentName);
         return (typeof isExistingStudent == 'object');
-    }
+    },
+    getTotalPrecensesDaysByStudent: async (presences)=>{
+        try {
+            let durationGreater4 = presences.filter(presence => presence.getMinutesDuration() > 4).map(presence=>presence.getDayNumber());
+            let daysPresence = [...new Set(durationGreater4)].length
+            response.error = false;
+            response.message = `El estudiante acumuló ${daysPresence} dias en todas sus asistencias.`;
+            response.data = daysPresence;
+            return response;
+        } catch (error) {
+            response.error = true;
+            response.message = `Error calculando la cantidad de dias en presencia`;
+            return response;
+        }
+    },
+    getTotalMinutesByStudent: async (presences)=>{
+        try {
+            let durationGreater4 = presences.filter(presence => presence.getMinutesDuration() > 4).map(presence=>presence.getMinutesDuration());
+            const sumMinutes = (durationGreater4.length >0) ? durationGreater4.reduce((acum,item)=> acum + item) : 0;
+            response.error = false;
+            response.message = `El estudiante acumuló ${sumMinutes} minutos en todas sus asistencias. (Se omitieron las asistencias menores a 5 minutos)`;
+            response.data = sumMinutes;
+            return response; 
+        } catch (error) {
+            console.log("Error",error)
+            response.error = true;
+            response.message = `Error calculando la cantidad de minutos en todas las asistencias`;
+            return response;
+        }
+    },
+    getDataReport: async ()=>{
+
+    },
 }

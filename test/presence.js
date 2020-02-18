@@ -1,8 +1,24 @@
 
 var should = require('chai').should();
-var presenceFunctions = require('../logic/presence')
+var presenceFunctions = require('../logic/presence');
+var dataTable = require('../data');
+var Student = require('../models/classes/student');
+var Presence = require('../models/classes/presence');
 
 describe('Presence Test - Validate functions about Presence data', () => {
+
+    var student = new Student();
+    let presence = new Presence();
+    beforeEach(() => {
+        student.setName('Hilder');
+        dataTable.studentTable.push(student);
+        presence.setStudent(student);
+        presence.setDayNumber(2);
+        presence.setInitHour(11,50);
+        presence.setEndHour(15,35);
+        presence.setClassroomCode('F100');
+        dataTable.presenceTable.push(presence);
+    })
 
     describe('validatePresenceFields Function - Validate all fields about Presence', () =>{
         describe('1) Presence Student validation',()=>{
@@ -250,7 +266,7 @@ describe('Presence Test - Validate functions about Presence data', () => {
         })
 
         describe('6) Prescence with correct fields', () => {
-    
+
             it("Should get an object with error false, message property and object prepared to save",async () => {
 
                 const response = await presenceFunctions.validationFields('Presence Hilder 2 10:55 10:58 F100');
@@ -327,6 +343,43 @@ describe('Presence Test - Validate functions about Presence data', () => {
             
         })
 
+    })
+
+    describe("getPresencesByStudent Function - get array of students's presences",()=>{
+        
+        var student = new Student();
+        beforeEach(() => {
+            dataTable.studentTable = new Array();
+            dataTable.presenceTable = new Array();
+            student.setName('Hilder');
+            dataTable.studentTable.push(student);
+            for (let i = 0; i < 10; i++) {
+                let presence = new Presence();
+                let dia = Math.floor((Math.random() * (7 - 1)) + 1)
+                presence.setStudent(student);
+                presence.setDayNumber( dia );
+                presence.setInitHour(Math.floor((Math.random() * (11 - 0)) + 0),Math.floor((Math.random() * (29 - 0)) + 0));
+                presence.setEndHour((Math.floor((Math.random() * (11 - 0)) + 0) )+ 1,Math.floor((Math.random() * (29 - 0)) + 0));
+                presence.setClassroomCode('F100');
+                dataTable.presenceTable.push(presence);
+            }
+        }) 
+        it("Should retrieve an array with student's presences, if the student dont have presences retrieve a emprty array",async ()=>{
+            const response = await presenceFunctions.getPresencesByStudent(student);
+            response.should.be.an('object');
+            response.error.should.be.equals(false)
+            response.should.have.property('error');
+            response.error.should.be.an('boolean');
+            response.should.have.property('message');
+            response.message.should.be.an("string");
+            response.should.have.property('data');
+            response.data.should.be.an("array");
+        });
+    });
+
+    afterEach(() => {
+        dataTable.studentTable = new Array();
+        dataTable.presenceTable = new Array();
     })
     
 })

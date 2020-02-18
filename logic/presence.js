@@ -8,7 +8,6 @@ const presenceObject = require('../models/schemas/pesence');
 const Presence = require('../models/classes/presence');
 
 let dataTables = require('../data');
-let testTables = require('../test/mock/data');
 
 const INDEX_EXEC_COMMAND = 0;
 const INDEX_STUDENT_COMMAND = 1;
@@ -78,5 +77,18 @@ module.exports = {
         newPresence.setEndHour(endHour,endMinutes);
         newPresence.setClassroomCode(classroomCode);
         return newPresence;
+    },
+    getPresencesByStudent: async (student)=>{
+        try {
+            const presences =  dataTables.presenceTable.filter( presence => presence.getStudent().getName() === student.getName() );
+            response.error = false;
+            response.data = presences;
+            response.message = `Se han buscando las presencias de manera exitosa.`;
+            return response;
+        } catch (error) {
+            response.error = true;
+            response.message = `Error buscando las presencias del alumno`;
+            return response;
+        }
     }
 } 
