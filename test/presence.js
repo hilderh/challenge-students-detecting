@@ -1,16 +1,259 @@
 
 var should = require('chai').should();
-var presenceFunctions = require('../logic/presence')
+var presenceFunctions = require('../logic/presence');
+var dataTable = require('../data');
+var Student = require('../models/classes/student');
+var Presence = require('../models/classes/presence');
 
 describe('Presence Test - Validate functions about Presence data', () => {
 
+    var student = new Student();
+    let presence = new Presence();
+    beforeEach(() => {
+        student.setName('Hilder');
+        dataTable.studentTable.push(student);
+        presence.setStudent(student);
+        presence.setDayNumber(2);
+        presence.setInitHour(11,50);
+        presence.setEndHour(15,35);
+        presence.setClassroomCode('F100');
+        dataTable.presenceTable.push(presence);
+    })
+
     describe('validatePresenceFields Function - Validate all fields about Presence', () =>{
+        describe('1) Presence Student validation',()=>{
+            describe('1.1) Presence without Student', () => {
+        
+                it("Should get an object with error true and error's message property",async () => {
+    
+                    const response = await presenceFunctions.validationFields('Presence 2 09:04 10:35 F100');
+                    response.should.be.an('object');
+                    response.should.have.property('error');
+                    response.error.should.be.an('boolean');
+                    response.error.should.be.equals(true)
+                    response.should.have.property('message');
+                    response.message.should.be.an("string");
+                    
+                })
+                
+            })
+            describe('1.2) Presence with a not exiting Student', () => {
+        
+                it("Should get an object with error true and error's message property",async () => {
+    
+                    const response = await presenceFunctions.validationFields('Presence Matthias 2 09:04 10:35 F100');
+                    response.should.be.an('object');
+                    response.should.have.property('error');
+                    response.error.should.be.an('boolean');
+                    response.error.should.be.equals(true)
+                    response.should.have.property('message');
+                    response.message.should.be.an("string");
+                    
+                })
+                
+            })
+        });
+        describe('2) Presence dayNumber Validation',()=>{
+            describe('2.1) Presence without Day', () => {
+        
+                it("Should get an object with error true and error's message property",async () => {
+    
+                    const response = await presenceFunctions.validationFields('Presence Matthias 09:04 10:35 F100');
+                    response.should.be.an('object');
+                    response.should.have.property('error');
+                    response.error.should.be.an('boolean');
+                    response.error.should.be.equals(true)
+                    response.should.have.property('message');
+                    response.message.should.be.an("string");
+                    
+                })
+                
+            })
+    
+            describe('2.2) Presence with string day', () => {
+        
+                it("Should get an object with error true and error's message property",async () => {
+    
+                    const response = await presenceFunctions.validationFields('Presence Hilder hi 09:04 10:35 F100');
+                    response.should.be.an('object');
+                    response.should.have.property('error');
+                    response.error.should.be.an('boolean');
+                    response.error.should.be.equals(true)
+                    response.should.have.property('message');
+                    response.message.should.be.an("string");
+                    
+                })
+                
+            })
+    
+            describe('2.3) Presence with a day smaller than 1', () => {
+        
+                it("Should get an object with error true and error's message property",async () => {
+    
+                    const response = await presenceFunctions.validationFields('Presence Hilder 0 09:04 10:35 F100');
+                    response.should.be.an('object');
+                    response.should.have.property('error');
+                    response.error.should.be.an('boolean');
+                    response.error.should.be.equals(true)
+                    response.should.have.property('message');
+                    response.message.should.be.an("string");
+                    
+                })
+                
+            })
+    
+            describe('2.4) Presence with a day bigger than 7', () => {
+        
+                it("Should get an object with error true and error's message property",async () => {
+    
+                    const response = await presenceFunctions.validationFields('Presence Hilder 32 09:04 10:35 F100');
+                    response.should.be.an('object');
+                    response.should.have.property('error');
+                    response.error.should.be.an('boolean');
+                    response.error.should.be.equals(true)
+                    response.should.have.property('message');
+                    response.message.should.be.an("string");
+                    
+                })
+                
+            })
+        });
+        describe('3) Presence initHour Validation',()=>{
+            describe('3.1) Presence without Init hour', () => {
+        
+                it("Should get an object with error true and error's message property",async () => {
+    
+                    const response = await presenceFunctions.validationFields('Presence Hilder 2 10:35 F100');
+                    response.should.be.an('object');
+                    response.should.have.property('error');
+                    response.error.should.be.an('boolean');
+                    response.error.should.be.equals(true)
+                    response.should.have.property('message');
+                    response.message.should.be.an("string");
+                    
+                })
+                
+            })
+    
+            describe('3.2) Presence with Init hour invalid', () => {
+        
+                it("Should get an object with error true and error's message property",async () => {
+    
+                    const response = await presenceFunctions.validationFields('Presence Hilder 2 a:04 10:35 F100');
+                    response.should.be.an('object');
+                    response.should.have.property('error');
+                    response.error.should.be.an('boolean');
+                    response.error.should.be.equals(true)
+                    response.should.have.property('message');
+                    response.message.should.be.an("string");
+                    
+                })
+                
+            })
+    
+            describe('3.3) Presence with Init hour minutes invalid', () => {
+        
+                it("Should get an object with error true and error's message property",async () => {
+    
+                    const response = await presenceFunctions.validationFields('Presence Hilder 2 1:a 10:35 F100');
+                    response.should.be.an('object');
+                    response.should.have.property('error');
+                    response.error.should.be.an('boolean');
+                    response.error.should.be.equals(true)
+                    response.should.have.property('message');
+                    response.message.should.be.an("string");
+                    
+                })
+                
+            })
+        });
+        describe('4) Presence endHour Validation',()=>{
+            describe('4.1) Presence without End hour', () => {
+        
+                it("Should get an object with error true and error's message property",async () => {
+    
+                    const response = await presenceFunctions.validationFields('Presence Matthias 2 10:35 F100');
+                    response.should.be.an('object');
+                    response.should.have.property('error');
+                    response.error.should.be.an('boolean');
+                    response.error.should.be.equals(true)
+                    response.should.have.property('message');
+                    response.message.should.be.an("string");
+                    
+                })
+                
+            })
+    
+            describe('4.2) Presence with End hour invalid', () => {
+        
+                it("Should get an object with error true and error's message property",async () => {
+    
+                    const response = await presenceFunctions.validationFields('Presence Hilder 2 10:04 a:35 F100');
+                    response.should.be.an('object');
+                    response.should.have.property('error');
+                    response.error.should.be.an('boolean');
+                    response.error.should.be.equals(true)
+                    response.should.have.property('message');
+                    response.message.should.be.an("string");
+                    
+                })
+                
+            })
+    
+            describe('4.3) Presence with End hour minutes invalid', () => {
+        
+                it("Should get an object with error true and error's message property",async () => {
+    
+                    const response = await presenceFunctions.validationFields('Presence Hilder 2 10:00 11:a F100');
+                    response.should.be.an('object');
+                    response.should.have.property('error');
+                    response.error.should.be.an('boolean');
+                    response.error.should.be.equals(true)
+                    response.should.have.property('message');
+                    response.message.should.be.an("string");
+                    
+                })
+                
+            })
+    
+            describe('4.4) Presence with an InitHour later than Endhour', () => {
+        
+                it("Should get an object with error true and error's message property",async () => {
+    
+                    const response = await presenceFunctions.validationFields('Presence Hilder 2 12:00 11:00 F100');
+                    response.should.be.an('object');
+                    response.should.have.property('error');
+                    response.error.should.be.an('boolean');
+                    response.error.should.be.equals(true)
+                    response.should.have.property('message');
+                    response.message.should.be.an("string");
+                    
+                })
+                
+            })
+    
+            describe('4.5) Presence with an InitHourMinutes later than EndhourMinutes when initHour and Endhour have a same hour', () => {
+        
+                it("Should get an object with error true and error's message property",async () => {
+    
+                    const response = await presenceFunctions.validationFields('Presence Hilder 2 12:10 12:00 F100');
+                    response.should.be.an('object');
+                    response.should.have.property('error');
+                    response.error.should.be.an('boolean');
+                    response.error.should.be.equals(true)
+                    response.should.have.property('message');
+                    response.message.should.be.an("string");
+                    
+                })
+                
+            })
+        })
 
-        describe('1) Presence without all fields complete', () => {
+        describe('5) Presence without classroom', () => {
     
             it("Should get an object with error true and error's message property",async () => {
 
-                const response = await presenceFunctions.validationFields('Presence 2 09:04 10:35 F100');
+                const response = await presenceFunctions.validationFields('Presence Matthias 2 10:35 10:35');
                 response.should.be.an('object');
                 response.should.have.property('error');
                 response.error.should.be.an('boolean');
@@ -22,28 +265,11 @@ describe('Presence Test - Validate functions about Presence data', () => {
             
         })
 
-        describe('2) Presence with a not exiting Student', () => {
-    
-            it("Should get an object with error true and error's message property",async () => {
+        describe('6) Prescence with correct fields', () => {
 
-                const response = await presenceFunctions.validationFields('Presence Matthias 2 09:04 10:35 F100');
-                response.should.be.an('object');
-                response.should.have.property('error');
-                response.error.should.be.an('boolean');
-                response.error.should.be.equals(true)
-                response.should.have.property('message');
-                response.message.should.be.an("string");
-                
-            })
-            
-        })
-
-        describe('3) Prescence with correct fields (name)', () => {
-    
             it("Should get an object with error false, message property and object prepared to save",async () => {
 
-                const response = await presenceFunctions.validationFields('Presence Hilder 2 10:00 10:06 F100');
-                console.log("Response",response);
+                const response = await presenceFunctions.validationFields('Presence Hilder 2 10:55 10:58 F100');
                 response.should.be.an('object');
                 response.should.have.property('error');
                 response.error.should.be.an('boolean');
@@ -52,8 +278,17 @@ describe('Presence Test - Validate functions about Presence data', () => {
                 response.message.should.be.an("string");
                 response.should.have.property('data');
                 response.data.should.be.an("object");
-                /* response.data.should.have.property('name');
-                response.data.name.should.be.an('string'); */ 
+                response.data.should.have.property('student');
+                response.data.student.should.have.property('name');
+                response.data.student.name.should.be.an('string');
+                response.data.should.have.property('dayNumber');
+                response.data.dayNumber.should.be.an('number');
+                response.data.should.have.property('initHour');
+                response.data.initHour.should.be.an('number');
+                response.data.should.have.property('endHour');
+                response.data.endHour.should.be.an('number');
+                response.data.should.have.property('classroomCode');
+                response.data.classroomCode.should.be.an('string');
 
             })
             
@@ -61,58 +296,90 @@ describe('Presence Test - Validate functions about Presence data', () => {
 
     })
 
-    /* describe('saveNewStudent Function - Record a new Student in data', () =>{
+    describe('saveNewPresence Function - Record a new Presence in data', () =>{
 
-        describe('1) New or Existing Student', () => {
+        describe('1) When the student does not exist', () => {
     
-            it("Should get an object with error false, message property and object prepared to save",async () => {
+            it("Should get an object with error true, message property",async () => {
 
-                const response = await studentFunctions.createNewStudent('Student Hilder');
+                const response = await presenceFunctions.createNewPresence('Presence Matthias 2 10:55 10:58 F100');
                 response.should.be.an('object');
                 response.should.have.property('error');
                 response.error.should.be.an('boolean');
+                response.error.should.be.equals(true)
+                response.should.have.property('message');
+                response.message.should.be.an("string");
+
+            })
+            
+        })
+        describe('2) When the student exist', () => {
+    
+            it("Should get an object with error false, message property and object presence stored",async () => {
+
+                const response = await presenceFunctions.createNewPresence('Presence Hilder 2 11:50 23:49 F100');
+                response.should.be.an('object');
                 response.error.should.be.equals(false)
+                response.should.have.property('error');
+                response.error.should.be.an('boolean');
                 response.should.have.property('message');
                 response.message.should.be.an("string");
                 response.should.have.property('data');
                 response.data.should.be.an("object");
-                response.data.should.have.property('name');
-                response.data.name.should.be.an('string');
+                response.data.should.have.property('student');
+                response.data.student.should.be.an("object");
+                response.data.student.should.have.property('name');
+                response.data.student.name.should.be.an("string");
+                response.data.should.have.property('dayNumber');
+                response.data.dayNumber.should.be.an("number");
+                response.data.should.have.property('initHour');
+                response.data.initHour.should.be.an("date");
+                response.data.should.have.property('endHour');
+                response.data.endHour.should.be.an("date");
+                response.data.should.have.property('classroomCode');
+                response.data.classroomCode.should.be.an("string");
 
             })
             
         })
 
-    }) */
+    })
 
-    /* describe('isExistingStudent Function - check if a Student exist in data', () =>{
+    describe("getPresencesByStudent Function - get array of students's presences",()=>{
+        
+        var student = new Student();
+        beforeEach(() => {
+            dataTable.studentTable = new Array();
+            dataTable.presenceTable = new Array();
+            student.setName('Hilder');
+            dataTable.studentTable.push(student);
+            for (let i = 0; i < 10; i++) {
+                let presence = new Presence();
+                let dia = Math.floor((Math.random() * (7 - 1)) + 1)
+                presence.setStudent(student);
+                presence.setDayNumber( dia );
+                presence.setInitHour(Math.floor((Math.random() * (11 - 0)) + 0),Math.floor((Math.random() * (29 - 0)) + 0));
+                presence.setEndHour((Math.floor((Math.random() * (11 - 0)) + 0) )+ 1,Math.floor((Math.random() * (29 - 0)) + 0));
+                presence.setClassroomCode('F100');
+                dataTable.presenceTable.push(presence);
+            }
+        }) 
+        it("Should retrieve an array with student's presences, if the student dont have presences retrieve a emprty array",async ()=>{
+            const response = await presenceFunctions.getPresencesByStudent(student);
+            response.should.be.an('object');
+            response.error.should.be.equals(false)
+            response.should.have.property('error');
+            response.error.should.be.an('boolean');
+            response.should.have.property('message');
+            response.message.should.be.an("string");
+            response.should.have.property('data');
+            response.data.should.be.an("array");
+        });
+    });
 
-        describe('1) Existing Student', () => {
+    afterEach(() => {
+        dataTable.studentTable = new Array();
+        dataTable.presenceTable = new Array();
+    })
     
-            it("Should get a true value",async () => {
-
-                const response = await studentFunctions.isExistingStudent('Hilder');
-                response.should.be.an('boolean');
-                response.should.be.equals(true)
-                
-            })
-            
-        })
-
-        describe('2) New Student', () => {
-    
-            it("Should get a false value",async () => {
-
-                const response = await studentFunctions.isExistingStudent('Hajdoropo');
-                response.should.be.an('boolean');
-                response.should.be.equals(false);
-
-            })
-            
-        })
-
-    }) */
-
-    
-  
 })
