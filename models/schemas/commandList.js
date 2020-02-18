@@ -1,5 +1,5 @@
-const studentFunctions = require('../logic/student');
-const presenceFunctions = require('../logic/presence');
+const studentFunctions = require('../../logic/student');
+const presenceFunctions = require('../../logic/presence');
 
 
 module.exports = {

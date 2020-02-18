@@ -1,5 +1,5 @@
 const Joi = require('@hapi/joi');
-const studentObject = require('../models/student');
+const studentObject = require('../models/schemas/student');
 const Student = require('../models/classes/student');
 let dataTables = require('../data');
 let testTables = require('../test/mock/data');

@@ -1,7 +1,7 @@
 const inquirer = require('inquirer');
 var fs = require('fs');
 
-var enabledCommands = require('../../models/commandList')
+var enabledCommands = require('../../models/schemas/commandList')
 let response = {
   error: false,
   message: '',

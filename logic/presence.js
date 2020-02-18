@@ -1,10 +1,10 @@
 const Joi = require('@hapi/joi');
-const studentObject = require('../models/student');
+const studentObject = require('../models/schemas/student');
 const Student = require('../models/classes/student');
 
 const studentFuncionts = require('../logic/student')
 
-const presenceObject = require('../models/pesence');
+const presenceObject = require('../models/schemas/pesence');
 const Presence = require('../models/classes/presence');
 
 let dataTables = require('../data');
@@ -79,4 +79,4 @@ module.exports = {
         newPresence.setClassroomCode(classroomCode);
         return newPresence;
     }
-}
+} 

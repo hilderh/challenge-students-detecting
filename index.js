@@ -2,7 +2,7 @@ const chalk = require("chalk");
 const boxen = require("boxen");
 
 const promptFunctions = require('./logic/commandLine/fileFromPrompt');
-const commandsList = require('./models/commandList')
+const commandsList = require('./models/schemas/commandList')
 const INDEX_COMMAND = 0;
 
 /* 
