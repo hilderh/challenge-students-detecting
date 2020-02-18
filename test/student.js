@@ -68,7 +68,7 @@ describe('Student Test - Validate functions about Student data', () => {
 
     })
 
-    /* describe('isExistingStudent Function - check if a Student exist in data', () =>{
+    describe('isExistingStudent Function - check if a Student exist in data', () =>{
 
         describe('1) Existing Student', () => {
     
@@ -94,7 +94,7 @@ describe('Student Test - Validate functions about Student data', () => {
             
         })
 
-    }) */
+    })
 
     
   

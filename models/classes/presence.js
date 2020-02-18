@@ -15,14 +15,14 @@ class Presence{
     setDayNumber(dayNumber){
         this.dayNumber = dayNumber;
     }
-    setInitHour(initHour){
-        this.initHour = initHour;
+    setInitHour(hour,minutes){
+        this.initHour = new Date(2020,1,this.dayNumber,hour,minutes);
     }
-    setEndHour(endHour){
-        this.endHour = endHour;
+    setEndHour(hour,minutes){
+        this.endHour = new Date(2020,1,this.dayNumber,hour,minutes);
     }
     setClassroomCode(classroomCode){
-        this.classroomCode = student;
+        this.classroomCode = classroomCode;
     }
 
     // Getters

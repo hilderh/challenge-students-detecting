@@ -1,4 +1,6 @@
 const studentFunctions = require('../logic/student');
+const presenceFunctions = require('../logic/presence');
+
 
 module.exports = {
     async Student(commandLineStudent){
@@ -6,6 +8,7 @@ module.exports = {
         return responseCreate.message;
     },
     async Presence(commandLinePresence){
-        return commandLinePresence
+        const responseCreate = await presenceFunctions.createNewPresence(commandLinePresence)
+        return responseCreate.message;
     }
 }
