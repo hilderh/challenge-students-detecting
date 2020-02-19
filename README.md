@@ -1,3 +1,5 @@
+![Image Console](./images/console.jpg)
+
 # Test Challenge Foris
 ## Solución
 Partiendo del lado conceptual, sabemos que un problema puede ser abordado de diferentes maneras. En este caso, se aborda la solución en base a tres factores : Escalabilidad, test, legibilidad.
