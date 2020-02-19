@@ -14,30 +14,46 @@ let response = {
 module.exports = {
     generatePresencesByStudentReport: async ()=>{
         try {
-            for (const student of dataTables.studentTable) {
-                const presencesStudent = await presenceFunctions.getPresencesByStudent(student);
-                // const minutesPresence = await studentFunctions.getTotalMinutesByStudent([...presencesStudent.data]);
-                // console.log(minutesPresence);
-                const daysPresences = await studentFunctions.getTotalPrecensesDaysByStudent([...presencesStudent.data]);
-                console.log(daysPresences)
-                /* console.log(`${ student.getName() }: `,`${minutesPresence.data} minutos`,`en ${daysPresences.data} dias`) */
-            }
-            for (const student of dataTables.studentTable) {
-                const presencesStudent = await presenceFunctions.getPresencesByStudent(student);
-                const minutesPresence = await studentFunctions.getTotalMinutesByStudent([...presencesStudent.data]);
-                console.log(minutesPresence);
-                /* console.log(`${ student.getName() }: `,`${minutesPresence.data} minutos`,`en ${daysPresences.data} dias`) */
-            }
-            // console.log("Test",responseReport);
-            /* response.error = false
+            const {studentTable: students} = dataTables;
+            const studentsData = await module.exports.getStudentsData(students);
+            const orderByMinutes = await module.exports.orderReportbyMinutes(studentsData);
+            const printReport = module.exports.printReport(studentsData,orderByMinutes)
+            /* for (const student of students) {
+                const {data: presences ,error,message} = await presenceFunctions.getPresencesByStudent(student);
+                const {minutes,days} = await module.exports.getStudentReport([...presences]);
+                const buildStudentOutput = `${student.getName()}: ${  (days == 0 && minutes == 0) ? '0' : minutes + ' minutos en ' + days + ' dias\n'}`;
+                consoleOutput = consoleOutput + buildStudentOutput; 
+            } */
+            response.error = false
             response.message = 'Atributos del Studiante validados de manera correcta.';
-            response.data = validData;
-            return response; */
+            response.data = printReport;
+            return response;
         } catch (error) {
-            const fieldError = studentObject.attributtes[Object.keys( error._original )[0]].title;
             response.error = true;
-            response.message = `Asegúrate que el parámetro ${fieldError} exista y/o esté escrito de manera correcta`;
+            response.message = `Asegúrate que el parámetro exista y/o esté escrito de manera correcta`;
             return response;
         }
+    },
+    getStudentReport: async (presences)=>{
+        const {data: minutes} = await studentFunctions.getTotalMinutesByStudent(presences);
+        const {data: days} = await studentFunctions.getTotalPrecensesDaysByStudent(presences);
+        return {minutes,days};
+    },
+    getStudentsData: async (students)=>{
+        const studentsData = new Array();
+        for (const student of students){
+            const {data: presences ,error,message} = await presenceFunctions.getPresencesByStudent(student);
+            const {minutes,days} = await module.exports.getStudentReport(presences);
+            studentsData.push({name: student.getName(),minutes,days});
+        };
+        return studentsData;
+    },
+    orderReportbyMinutes:(report)=>{
+        return report.sort( (last,next) => next.minutes > last.minutes);
+    },
+    printReport(orderByMinutes){
+        let consoleOutput = 'PRESCENCES REPORT: \n\n';
+        orderByMinutes.map((output)=> {consoleOutput = consoleOutput + `${output.name}: ${output.minutes} minutes in ${output.days} days\n`});
+        return consoleOutput;
     }
 }

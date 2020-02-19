@@ -80,11 +80,13 @@ module.exports = {
     },
     getPresencesByStudent: async (student)=>{
         try {
-            const presences =  dataTables.presenceTable.filter( presence => presence.getStudent().getName() === student.getName() );
-            response.error = false;
-            response.data = presences;
-            response.message = `Se han buscando las presencias de manera exitosa.`;
-            return response;
+            return new Promise((resolve,reject)=>{
+                const presences =  dataTables.presenceTable.filter( presence => presence.getStudent().getName() === student.getName() );
+                response.error = false;
+                response.data = presences;
+                response.message = `Se han buscando las presencias de manera exitosa.`;
+                return resolve(response);
+            });
         } catch (error) {
             response.error = true;
             response.message = `Error buscando las presencias del alumno`;

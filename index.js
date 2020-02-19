@@ -1,83 +1,16 @@
-const chalk = require("chalk");
-const boxen = require("boxen");
-
-const promptFunctions = require('./logic/commandLine/fileFromPrompt');
-const reports = require('./logic/report');
-
-const commandsList = require('./models/schemas/commandList');
-const INDEX_COMMAND = 0;
-
 /* 
-class person{
-    constructor(){
+  _____                  _              ____                                 _        
+ |  ___|   ___    _ __  (_)  ___       / ___|   ___    _ __    ___    ___   | |   ___ 
+ | |_     / _ \  | '__| | | / __|     | |      / _ \  | '_ \  / __|  / _ \  | |  / _ \
+ |  _|   | (_) | | |    | | \__ \     | |___  | (_) | | | | | \__ \ | (_) | | | |  __/
+ |_|      \___/  |_|    |_| |___/      \____|  \___/  |_| |_| |___/  \___/  |_|  \___|
 
-    }
-    get name(){
-        return this.name;
-    }
-    set setName(name){
-        this.name = name;
-    }
-}
+*/
 
 
-class Animal{
+const promptFunctions = require('./logic/fileFromPrompt');
 
-    constructor(number){
-        this.age = number;
-    }
-    getAge(){
-        return this.age;
-    }
-}
+console.clear();
+console.log( promptFunctions.printGreetings() );
+promptFunctions.run();
 
- var animal = new Animal(2);
-const greeting = chalk.white.bold(`Lista de asistencia \n\nHola que tal mis panas como estan? \n ${animal.getAge()}`);
-
-
-
-
-
-
-console.log(msgBox);
-
-const run = async () => {
-    const credentials = await getUrlFile.urlUser();
-    console.log(credentials);
-};
-  
-run(); */
-
-const boxenOptions = {
-    padding: 1,
-    margin: 1,
-    borderStyle: "round",
-    borderColor: "green",
-    backgroundColor: "#555555"
-};
-
-
-
-const run = async ()=>{
-    try {
-        const readPromptFile = await promptFunctions.readPromptFile();
-        const lineValidationResult = await promptFunctions.parseDataFromFile(readPromptFile.data);
-        console.log(lineValidationResult.message);
-        if(lineValidationResult.data.validLines.length == 0) throw new Error(lineValidationResult.message);
-        for (const line of lineValidationResult.data.validLines) {
-            const NUMBER_COMMAND = `${lineValidationResult.data.validLines.indexOf(line) + 1}`
-            console.log(`Procesando linea Nº ${NUMBER_COMMAND}...`,);
-            console.log(`Comando: ${line}`);
-            const resultMessage = await commandsList[line.split(' ')[INDEX_COMMAND]](line);
-            console.log(`Result: ${resultMessage}\n`);
-        }
-        reports.generatePresencesByStudentReport();
-        // const msgBox = boxen( message, boxenOptions );
-        // console.log(responseValdation.data);
-    } catch (error) {
-        const msgBox = boxen(error.message, boxenOptions );
-        return console.log(msgBox);
-    }
-}
-
-run();
