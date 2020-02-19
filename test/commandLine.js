@@ -1,6 +1,6 @@
 
 var should = require('chai').should();
-var prompt = require('../logic/commandLine/fileFromPrompt')
+var prompt = require('../logic/fileFromPrompt')
 
 describe('CommandLine Test - Validate functions about Command Line', () => {
 
