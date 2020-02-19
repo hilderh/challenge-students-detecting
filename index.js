@@ -8,9 +8,9 @@
 */
 
 
-const promptFunctions = require('./logic/fileFromPrompt');
+const prompt = require('./logic/fileFromPrompt');
 
 console.clear();
-console.log( promptFunctions.printGreetings() );
-promptFunctions.run();
+console.log( prompt.printGreetings() );
+prompt.run();
 
