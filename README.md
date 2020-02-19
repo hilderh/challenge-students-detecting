@@ -1,6 +1,3 @@
-<<<<<<< HEAD
-![Image](./images/console.jpg)
-=======
 ![Image Console](./images/console.jpg)
 
 # Test Challenge Foris
@@ -18,4 +15,3 @@ La función de esta carpeta es simple, tener imagenes para este archivo Readme.m
 
 ### Logic
 Contiene la lógica donde se manejan imagenes para este archivo Readme.md en este caso solo contiene 1 imagen. La que se observa mas arriba.
->>>>>>> master
