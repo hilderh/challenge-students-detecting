@@ -29,23 +29,19 @@ const boxenOptionsLibne = {
     },
 };
 console.clear();
-console.log(
-    chalk.yellow(
-        figlet.textSync('Foris  Console', { horizontalLayout: 'full' })
-    )
-);
+console.log( chalk.yellow( figlet.textSync( 'Foris  Console' , { horizontalLayout: 'full' } ) ) );
 const run = async ()=>{
     try {
         const readPromptFile = await promptFunctions.readPromptFile();
-        const lineValidationResult = await promptFunctions.parseDataFromFile(readPromptFile.data);
-        if(lineValidationResult.data.validLines.length == 0) throw new Error(lineValidationResult.message);
-        let messageHeader = boxen(`Proccesing file...\nThe invalid commands will be deleted...\nReading...`,boxenOptionsLibne)
+        const {data: dataPrompt,message: messagePrompt } = await promptFunctions.parseDataFromFile(readPromptFile.data);
+        if(dataPrompt.validLines.length == 0) throw new Error(messagePrompt);
+        let messageHeader = boxen(`Proccesing and reading file...`,boxenOptionsLibne)
         console.log(messageHeader);
         let messageByReadLine = ''
-        for (const line of lineValidationResult.data.validLines) {
+        for (const line of dataPrompt.validLines) {
             let getCommand = line.split(' ')[INDEX_COMMAND];
             const executionLineMessage = await commandsList[getCommand](line);
-            messageByReadLine = messageByReadLine + `${line} -> ${executionLineMessage}\n\n`
+            messageByReadLine = messageByReadLine + `${line} -> ${executionLineMessage}\n`;
         }
         console.log(boxen(`${messageByReadLine}`,boxenOptionsLibne));
         let aq = await inquirer.prompt([
@@ -56,8 +52,8 @@ const run = async ()=>{
               validate: ( value ) => value
             }
           ])
-        const {data: consoleOutputReport } = await reports.generatePresencesByStudentReport();
-        console.log(boxen( (aq.seeReport) ? consoleOutputReport : "Why?. Please, run me again :)" , boxenOptions ));
+        const {data: outputReport } = await reports.generatePresencesByStudentReport();
+        console.log(boxen( (aq.seeReport) ? outputReport : "Why?. Please, run me again :)" , boxenOptions ));
     } catch (error) {
         const msgBox = boxen(error.message, boxenOptions );
         return console.log(msgBox);
