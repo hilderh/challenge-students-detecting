@@ -14,29 +14,21 @@ let response = {
 module.exports = {
     generatePresencesByStudentReport: async ()=>{
         try {
+            let consoleOutput = 'Students Report\n'
             for (const student of dataTables.studentTable) {
-                const presencesStudent = await presenceFunctions.getPresencesByStudent(student);
-                // const minutesPresence = await studentFunctions.getTotalMinutesByStudent([...presencesStudent.data]);
-                // console.log(minutesPresence);
-                const daysPresences = await studentFunctions.getTotalPrecensesDaysByStudent([...presencesStudent.data]);
-                console.log(daysPresences)
-                /* console.log(`${ student.getName() }: `,`${minutesPresence.data} minutos`,`en ${daysPresences.data} dias`) */
+                const {data: presences ,error,message} = await presenceFunctions.getPresencesByStudent(student);
+                const {data: minutes} = await studentFunctions.getTotalMinutesByStudent([...presences]);
+                const {data: days} = await studentFunctions.getTotalPrecensesDaysByStudent([...presences]);
+                const buildStudentOutput = `${student.getName()}: ${  (days == 0 && minutes == 0) ? '0' : minutes + ' minutos en ' + days + ' dias\n'}`;
+                consoleOutput = consoleOutput + buildStudentOutput; 
             }
-            for (const student of dataTables.studentTable) {
-                const presencesStudent = await presenceFunctions.getPresencesByStudent(student);
-                const minutesPresence = await studentFunctions.getTotalMinutesByStudent([...presencesStudent.data]);
-                console.log(minutesPresence);
-                /* console.log(`${ student.getName() }: `,`${minutesPresence.data} minutos`,`en ${daysPresences.data} dias`) */
-            }
-            // console.log("Test",responseReport);
-            /* response.error = false
+            response.error = false
             response.message = 'Atributos del Studiante validados de manera correcta.';
-            response.data = validData;
-            return response; */
+            response.data = consoleOutput;
+            return response;
         } catch (error) {
-            const fieldError = studentObject.attributtes[Object.keys( error._original )[0]].title;
             response.error = true;
-            response.message = `Asegúrate que el parámetro ${fieldError} exista y/o esté escrito de manera correcta`;
+            response.message = `Asegúrate que el parámetro exista y/o esté escrito de manera correcta`;
             return response;
         }
     }

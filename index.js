@@ -1,79 +1,63 @@
 const chalk = require("chalk");
 const boxen = require("boxen");
+const figlet = require("figlet");
+const inquirer = require('inquirer');
 
 const promptFunctions = require('./logic/commandLine/fileFromPrompt');
 const reports = require('./logic/report');
-
 const commandsList = require('./models/schemas/commandList');
 const INDEX_COMMAND = 0;
-
-/* 
-class person{
-    constructor(){
-
-    }
-    get name(){
-        return this.name;
-    }
-    set setName(name){
-        this.name = name;
-    }
-}
-
-
-class Animal{
-
-    constructor(number){
-        this.age = number;
-    }
-    getAge(){
-        return this.age;
-    }
-}
-
- var animal = new Animal(2);
-const greeting = chalk.white.bold(`Lista de asistencia \n\nHola que tal mis panas como estan? \n ${animal.getAge()}`);
-
-
-
-
-
-
-console.log(msgBox);
-
-const run = async () => {
-    const credentials = await getUrlFile.urlUser();
-    console.log(credentials);
-};
-  
-run(); */
 
 const boxenOptions = {
     padding: 1,
     margin: 1,
-    borderStyle: "round",
-    borderColor: "green",
-    backgroundColor: "#555555"
+    borderStyle: "doubleSingle",
+    borderColor: "#38B7B1",
+    backgroundColor: "#555555",
 };
 
-
-
+const boxenOptionsLibne = {
+    padding: 0,
+    margin: 0,
+    borderStyle: {
+        topLeft: ' ',
+        topRight: ' ',
+        bottomLeft: ' ',
+        bottomRight: ' ',
+        horizontal: ' ',
+        vertical: ' '
+    },
+};
+console.clear();
+console.log(
+    chalk.yellow(
+        figlet.textSync('Foris  Console', { horizontalLayout: 'full' })
+    )
+);
 const run = async ()=>{
     try {
         const readPromptFile = await promptFunctions.readPromptFile();
         const lineValidationResult = await promptFunctions.parseDataFromFile(readPromptFile.data);
-        console.log(lineValidationResult.message);
         if(lineValidationResult.data.validLines.length == 0) throw new Error(lineValidationResult.message);
+        let messageHeader = boxen(`Proccesing file...\nThe invalid commands will be deleted...\nReading...`,boxenOptionsLibne)
+        console.log(messageHeader);
+        let messageByReadLine = ''
         for (const line of lineValidationResult.data.validLines) {
-            const NUMBER_COMMAND = `${lineValidationResult.data.validLines.indexOf(line) + 1}`
-            console.log(`Procesando linea Nº ${NUMBER_COMMAND}...`,);
-            console.log(`Comando: ${line}`);
-            const resultMessage = await commandsList[line.split(' ')[INDEX_COMMAND]](line);
-            console.log(`Result: ${resultMessage}\n`);
+            let getCommand = line.split(' ')[INDEX_COMMAND];
+            const executionLineMessage = await commandsList[getCommand](line);
+            messageByReadLine = messageByReadLine + `${line} -> ${executionLineMessage}\n\n`
         }
-        reports.generatePresencesByStudentReport();
-        // const msgBox = boxen( message, boxenOptions );
-        // console.log(responseValdation.data);
+        console.log(boxen(`${messageByReadLine}`,boxenOptionsLibne));
+        let aq = await inquirer.prompt([
+            {
+              name: 'seeReport',
+              type: 'confirm',
+              message: "Do you want to see the students presence's report ?",
+              validate: ( value ) => value
+            }
+          ])
+        const {data: consoleOutputReport } = await reports.generatePresencesByStudentReport();
+        console.log(boxen( (aq.seeReport) ? consoleOutputReport : "Why?. Please, run me again :)" , boxenOptions ));
     } catch (error) {
         const msgBox = boxen(error.message, boxenOptions );
         return console.log(msgBox);
