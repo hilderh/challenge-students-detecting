@@ -37,7 +37,9 @@ Como se solicitó, el archivo esta en un bundle de git. Para obtener los archivo
 
 Esto traerá los últimos cambios de *master* del repo y lo almacenará en una carpeta llamada *foris*.
 
-Una vez estando dentro de la carpeta "foris", ahora instala nuestro programa globalmente e instala las dependencias:
+Una vez estando dentro de la carpeta "foris", instala las dependencias e instala nuestro programa globalmente:
+
+    npm install
 
     npm install -g .
 
