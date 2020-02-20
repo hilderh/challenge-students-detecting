@@ -53,9 +53,13 @@ Si deseas utilizar un archivo .txt de tu propiedad entonces el comando seria alg
 
     foris tu_carpeta/tu_archivo.txt
 
-O simplemente si el archivo esta en el root folder del repo seria:
+O simplemente si el archivo esta en el root folder del repo sería:
 
     foris tu_archivo.txt
+
+También puedes ejecutar el programa de manera manual de la siguiente forma:
+
+    node . tu_archivo.txt
  
 Al ejecutar este comando, el programa lee el archivo linea por linea y al finalizar pregunta si quieres ver el reporte de resultados con una pregunta en la terminal como esta : 
 
@@ -96,7 +100,7 @@ Esta carpeta esta destinada a los archivos que manejaran almacenarán la data, o
 
 
 ### images
-La función de esta carpeta es simple, tener imágenes para este archivo README.md en este caso solo contiene 1 imágen. La que se observa añ principio de este archivo.
+La función de esta carpeta es simple, tener imágenes para este archivo README.md en este caso solo contiene 1 imágen. La que se observa al principio de este archivo.
 
 ### logic
 Contiene la lógica donde se manejan las funciones principales de cada actor del programa: Estudiantes, Asistencias y Funciones de la cónsola. Cumpliría el papel parecido a los "controladores". La idea principal es tratar de que cada una función tenga un solo propósito y asi evitar funciones extramadamente largas y que al final se transformen en poco leíbles, atentando contra las buenas prácticas.
