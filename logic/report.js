@@ -17,13 +17,7 @@ module.exports = {
             const {studentTable: students} = dataTables;
             const studentsData = await module.exports.getStudentsData(students);
             const orderByMinutes = await module.exports.orderReportbyMinutes(studentsData);
-            const printReport = module.exports.printReport(studentsData,orderByMinutes)
-            /* for (const student of students) {
-                const {data: presences ,error,message} = await presenceFunctions.getPresencesByStudent(student);
-                const {minutes,days} = await module.exports.getStudentReport([...presences]);
-                const buildStudentOutput = `${student.getName()}: ${  (days == 0 && minutes == 0) ? '0' : minutes + ' minutos en ' + days + ' dias\n'}`;
-                consoleOutput = consoleOutput + buildStudentOutput; 
-            } */
+            const printReport = module.exports.printReport(studentsData,orderByMinutes);
             response.error = false
             response.message = 'Atributos del Studiante validados de manera correcta.';
             response.data = printReport;

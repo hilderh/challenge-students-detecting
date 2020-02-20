@@ -96,18 +96,6 @@ describe('CommandLine Test - Validate functions about Command Line', () => {
                 parseResponse.data.validLines.should.be.an('array');
             })
         });
-
-       /* describe('2) File from prompt with empty line',()=>{
-            beforeEach(() => {
-                process.argv.splice(2,1);
-                process.argv.push('test/mock/someEmptyLinesFile.txt');
-            });
-            it('Should bla bña', async ()=>{
-                const response = await prompt.parseDataFromFile('hola\n\nhola\nhola\nhola\nhola\nhola\nhola\nhola\nholahola\nhola\nhola\nhola\nhola\nhola\nhola\nhola');
-            })
-        });
-
-          */
     });
 
   

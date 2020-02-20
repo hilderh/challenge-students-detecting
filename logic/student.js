@@ -78,8 +78,5 @@ module.exports = {
             response.message = `Error calculando la cantidad de minutos en todas las asistencias`;
             return response;
         }
-    },
-    getDataReport: async ()=>{
-
-    },
+    }
 }
