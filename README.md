@@ -1,7 +1,7 @@
 ![Image Console](./images/console.jpg)
 
 # Test Challenge Foris
-## Solución
+## ✅ Solución
 Partiendo del lado conceptual, sabemos que un problema puede ser abordado de diferentes maneras. En este caso, se aborda la solución en base a tres factores : Escalabilidad, test, legibilidad.
 
 En la medida de lo posible ( **siempre** **se puede mejorar** ) se trato de implementar practicas de desarrollo estandarizadas, de manera que se haga legible la lectura del codigo.
@@ -21,7 +21,15 @@ Como se mencionó anteriormente siempre se puede y se debe mejorar, para ello se
  - Las funciones llevan verbo, para obtener referencias de sus ejecuciones.
  - Las funciones devuelven objetos con las propiedades ***error***, ***message*** y si asi lo requeria tambien ***data*** 
  - Cada función debe tener **un** **solo** propósito, y a medida que alguna de estas crecia se buscaba refactorizar asignandole responsabilidad a otra funcion si era necesario.
-## Ejecución
+ 
+## 👩‍💻👨‍💻 Ejecución
+
+Como es el lenguaje donde se cuenta con mas habilidad y destreza al dia de hoy, el programa esta escrito en Javascript con el conjunto de librerias Node Js.
+
+Para la ejecucion del programa necesitas tener instaladas estas herramientas localmente:
+ - node > v9.5.0
+ - npm > 6.11.3
+ - git
 
 Como se solicitó el archivo esta en un bundle de git, para obtener los archivos desde este bundle el comando de ejecucion es: 
 
@@ -29,15 +37,31 @@ Como se solicitó el archivo esta en un bundle de git, para obtener los archivos
 
 Esto traera los ultimos cambios de *master* del repo y lo almacenara en una carpeta llamada *foris*.
 
-Con este comando principal el programa se ejecuta:
+Una vez estando dentro de la carpeta "foris", ahora instala nuestro programa globalmente e instala las dependencias:
 
-    node index.js test/mock/data.txt
-Esto ejecuta con node, el archivo index.js, con un archivo de entrada *data.txt* ubicado en la direccion dentro del proyecto *test/mock/* .
+    npm install -g .
 
-Al ejecutar este comando, el programa lee el archivo linea por linea y al finalizar pregunta si quieres ver el reporte de resultados con una pregunta en la terminal como esta ( **¡Por favor di que si a la consola!** ): 
+Hecho esto, puedes ejecutar el programa donde desees. Ademas, acabas de instalar nuestra ejecucion personalizada. ¿Que quiere decir esto?, bueno ahora nuestro programa ejecuta tipeando "***foris***" 🔥 :
 
-    ? Do you want to see the students presence's report ? (Y/n) 
- Una vez aceptado, el programa debe mostrar un reporte de estudiantes ordenado por el acumulado de asistencias expresadas en minutos.
+    foris test/mock/data.txt
+
+Con este comando principal el programa se ejecuta. *foris* ejecuta el programa con un archivo de entrada *data.txt* ubicado en la direccion dentro del proyecto *test/mock/* .
+
+Si deseas utilizar un archivo .txt de tu propiedad entonces el comando seria algo como 
+
+    foris tu_carpeta/tu_archivo.txt
+
+O simplemente si el archivo esta en el root folder del repo seria:
+
+    foris tu_archivo.txt
+ 
+Al ejecutar este comando, el programa lee el archivo linea por linea y al finalizar pregunta si quieres ver el reporte de resultados con una pregunta en la terminal como esta : 
+
+    ? Do you want to watch the students presence's report ? (Y/n) 
+
+( **¡Por favor di que si a la consola!** 😄)
+ 
+Una vez aceptado, el programa debe mostrar un reporte de estudiantes ordenado por el acumulado de asistencias expresadas en minutos.
 
 ```
    ╒════════════════════════════════════╕
@@ -53,7 +77,17 @@ Al ejecutar este comando, el programa lee el archivo linea por linea y al finali
    │                                    │
    ╘════════════════════════════════════╛
 ``` 
-## Estructura
+#### Testing
+Las pruebas unitarias se realizaron por funciones, y en base a las librerias [Mocha](https://mochajs.org/) y [Chai](https://www.chaijs.com/)
+
+    npm test 
+
+Esto ejecutará 31 pruebas unitarias por cada funcion involucrada en la lógica del programa.
+
+## 📁 Estructura
+
+### bin / *index.js*
+Es el ejecutor del programa. Seria algo parecido a un "Main" por llamarlo de alguna forma.
 
 ### data
 Esta carpeta esta destinada a los archivos que manejaran almacenaran la data, o bien dicho una capa de datos. En este caso sencillo por tratarse de data no persistente se manejó un archivo que simplemente contiene dos arrays, estos a su vez almacenan la data de Estudiantes y Asistencias simulando el funcionamiento de "tablas". Si fuese el caso de tablas reales en esta carpeta se podria manejar las llamadas a BD por ejemplo.
@@ -71,5 +105,15 @@ Es la base del programa, ya que maneja las clases y schemas que le dan vida al m
 ### test
 Contiene las pruebas unitarias del programa se desarrollaron las pruebas por cada una de las entidades asi como tambien para las funciones que manejan el prompt. Dentro esta una carpeta llamada "mock" que contiene dato de prueba en diferentes casos que lo requieran los test unitarios.
 
-### *index.js*
-Es el ejecutor del programa. Seria algo parecido a un "Main" por llamarlo de alguna forma.
+## 🤝 Consideraciones y Mejoras
+
+Obviamente, un programa/sistema/solución siempre tendrá mejoras y las ideas grupales siempre prevalecen sobre la individual, es por ello que seria de total agrado recibir feedback lo mas critico posible para tenerlo en cuenta en la mejora continua personal 💪. 
+
+Hay muchas cosas que por prioridad y tiempo me hubiesen gustado que tengan una mejor ejecucion y planteamiento. Aqui se lista las consideraciones al respecto:
+
+ - Los mensajes de salida del programa estan en español, y el resto en ingles. Me hubiese gustado unificar todos los mensajes en una misma linea.
+ - Me hubiese gustado probar el programa con mas de 1000 lineas, de manera de ver el performance de la solución aplicada.
+ - Seria estupendo implementar logs, en los cuales se viera las salidas inesperadas/errores/fallos del sistema.
+
+> ***Nota**: Gracias por la oportunidad de expresarme a través de este test.* 👍
+

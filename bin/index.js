@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 /* 
   _____                  _              ____                                 _        
  |  ___|   ___    _ __  (_)  ___       / ___|   ___    _ __    ___    ___   | |   ___ 
@@ -8,9 +9,10 @@
 */
 
 
-const prompt = require('./logic/fileFromPrompt');
+const prompt = require('../logic/fileFromPrompt');
 
 console.clear();
 console.log( prompt.printGreetings() );
+
 prompt.run();
 
