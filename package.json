@@ -1,8 +1,8 @@
 {
-  "name": "challenge-students-detecting",
+  "name": "foris-console",
   "version": "1.0.0",
   "description": "Command Line Application Student Detecting",
-  "main": "index.js",
+  "main": "bin/index.js",
   "scripts": {
     "test": "mocha"
   },
@@ -19,6 +19,9 @@
   ],
   "author": "Hilder Hernandez",
   "license": "ISC",
+  "bin": {
+    "foris": "./bin/index.js"
+  },
   "bugs": {
     "url": "https://github.com/hilderh/challenge-students-detecting/issues"
   },
